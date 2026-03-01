@@ -1,0 +1,12 @@
+{
+  "name": "demo6",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:theme": "cd Storybook && npm run build:theme",
+    "deliver:theme": "rm -rf Demo_project/src/theme && cp -r Storybook/theme-build Demo_project/src/theme",
+    "pipeline": "npm run build:theme && npm run deliver:theme",
+    "storybook": "cd Storybook && npm run storybook",
+    "dev": "cd Demo_project && npm run dev"
+  }
+}
