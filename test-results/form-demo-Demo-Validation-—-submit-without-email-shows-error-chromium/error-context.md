@@ -1,0 +1,69 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - heading "Demo Project" [level=6] [ref=e7]
+        - generic [ref=e8]:
+          - button "Dashboard" [ref=e9] [cursor=pointer]
+          - button "Form" [ref=e10] [cursor=pointer]: Form
+          - button "List" [ref=e11] [cursor=pointer]
+        - button [ref=e12] [cursor=pointer]:
+          - img [ref=e13]
+    - generic [ref=e15]:
+      - heading "Contact Form" [level=4] [ref=e16]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]: Name
+          - generic [ref=e22]:
+            - textbox "Name" [ref=e23]: John Doe
+            - group:
+              - generic: Name
+        - generic [ref=e24]:
+          - generic:
+            - text: Email
+            - generic: "*"
+          - generic [ref=e25]:
+            - textbox "Email" [ref=e26]
+            - group:
+              - generic: Email *
+          - paragraph [ref=e27]: Email is required
+        - generic [ref=e28]:
+          - generic [ref=e29]: Phone
+          - generic [ref=e30]:
+            - textbox "Phone" [ref=e31]: +1-555-123-4567
+            - group:
+              - generic: Phone
+        - generic [ref=e32]:
+          - generic [ref=e33]: Company
+          - generic [ref=e34]:
+            - textbox "Company" [ref=e35]: Acme Corp
+            - group:
+              - generic: Company
+        - generic [ref=e36]:
+          - generic [ref=e37]: Message
+          - generic [ref=e38]:
+            - textbox "Message" [ref=e39]: Hello, I would like to learn more about your services.
+            - group:
+              - generic: Message
+        - generic [ref=e40]:
+          - button "Cancel" [ref=e41] [cursor=pointer]
+          - button "Submit" [active] [ref=e42] [cursor=pointer]: Submit
+  - generic:
+    - img
+  - generic:
+    - img
+  - generic [ref=e43]:
+    - generic [ref=e44]: PM Review
+    - generic [ref=e45]: Submit button is still active while the form has a validation error. I think it should be disabled when required fields are not filled.
+  - generic [ref=e46]:
+    - generic [ref=e47]:
+      - generic [ref=e48]: Designer Note
+      - generic [ref=e49]: 3 / 4
+    - generic [ref=e50]:
+      - text: "\"Email is required\" — inline error appears under the field."
+      - text: "Design decision: we use inline validation (not a toast/modal) so the user sees exactly which field needs attention."
+    - button "Next" [ref=e52] [cursor=pointer]
+```

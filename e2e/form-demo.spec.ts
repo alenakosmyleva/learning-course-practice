@@ -60,7 +60,9 @@ async function step(page: Page, text: string, current: number, total: number) {
   // Clean up after click
   await page.evaluate(() => {
     document.getElementById('pw-note')?.remove();
+    document.getElementById('pw-review')?.remove();
     document.querySelectorAll('.pw-highlight').forEach(el => el.remove());
+    document.querySelectorAll('.pw-review-arrow').forEach(el => el.remove());
   });
 }
 
@@ -95,6 +97,63 @@ async function highlight(page: Page, label: string) {
     </svg>`;
     document.body.appendChild(arrow);
   }, label);
+}
+
+/** Show a PM review note (dark blue card) positioned above the designer card. */
+async function reviewNote(page: Page, text: string) {
+  await page.evaluate((text) => {
+    document.getElementById('pw-review')?.remove();
+
+    const review = document.createElement('div');
+    review.id = 'pw-review';
+    review.innerHTML = `
+      <div style="
+        position: fixed; bottom: 190px; right: 20px; width: 340px;
+        background: #1a2744; color: #d0d8e8; border-radius: 4px;
+        padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        font-family: -apple-system, sans-serif; z-index: 99999;
+        border: 1px solid #2a3a5c;
+      ">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+                    color: #5b8bd4; margin-bottom: 8px;">
+          PM Review
+        </div>
+        <div style="font-size: 14px; line-height: 1.6;">
+          ${text}
+        </div>
+      </div>
+    `;
+    document.body.appendChild(review);
+  }, text);
+}
+
+/** Blue arrow pointing at a button by its name. */
+async function reviewArrow(page: Page, buttonName: string) {
+  await page.evaluate((buttonName) => {
+    document.querySelectorAll('.pw-review-arrow').forEach(el => el.remove());
+
+    const buttons = Array.from(document.querySelectorAll('button'));
+    const target = buttons.find(b => b.textContent?.trim() === buttonName);
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const arrow = document.createElement('div');
+    arrow.className = 'pw-review-arrow';
+    const cy = rect.top + rect.height / 2;
+    Object.assign(arrow.style, {
+      position: 'fixed',
+      top: cy - 40 + 'px',
+      left: rect.right + 50 + 'px',
+      width: '180px',
+      height: '80px',
+      pointerEvents: 'none',
+      zIndex: '99998',
+    });
+    arrow.innerHTML = `<svg width="180" height="80" viewBox="0 0 180 80" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,40 60,10 60,28 180,28 180,52 60,52 60,70" fill="#5b8bd4"/>
+    </svg>`;
+    document.body.appendChild(arrow);
+  }, buttonName);
 }
 
 // ---------------------------------------------------------------------------
@@ -183,6 +242,11 @@ test('Demo: Validation — submit without email shows error', async ({ page }) =
   await page.getByRole('button', { name: 'Submit' }).click();
 
   await highlight(page, 'Email');
+  await reviewArrow(page, 'Submit');
+  await reviewNote(page, `
+    Submit button is still active while the form has a validation error.
+    I think it should be <b>disabled</b> when required fields are not filled.
+  `);
   await step(page, `
     <b>"Email is required"</b> — inline error appears
     under the field.<br><br>
