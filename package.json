@@ -11,7 +11,8 @@
     "dev": "cd Demo_project && npm run dev",
     "test": "npx playwright test e2e/form-flow.spec.ts",
     "demo": "npx playwright test e2e/form-demo.spec.ts",
-    "demo:trace": "npx playwright test e2e/form-flow.spec.ts && npx playwright show-trace test-results/*/trace.zip"
+    "demo:trace": "npx playwright test e2e/form-flow.spec.ts && npx playwright show-trace test-results/*/trace.zip",
+    "demo:draw": "npx playwright test e2e/drawing-demo.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2"
