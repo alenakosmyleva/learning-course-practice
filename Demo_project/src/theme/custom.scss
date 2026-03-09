@@ -1,0 +1,52 @@
+// 1. Include functions first
+@import "bootstrap/scss/functions";
+
+// 2. Custom variable overrides
+// --- Colors (matching our MUI palette) ---
+$primary:   #1976D2;
+$secondary: #9C27B0;
+$success:   #2E7D32;
+$info:      #0288D1;
+$warning:   #EF6C00;
+$danger:    #D32F2F;
+
+// --- Typography ---
+$font-family-base: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
+$headings-font-weight: 600;
+
+// --- Shape ---
+$border-radius:    0.5rem;
+$border-radius-sm: 0.375rem;
+$border-radius-lg: 0.625rem;
+
+// --- Buttons ---
+$btn-font-weight: 500;
+
+// 3. Include Bootstrap
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+
+// 4. Utilities BEFORE components (per docs)
+@import "bootstrap/scss/utilities";
+
+// 5. Include Bootstrap components
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/close";
+
+// 6. Utilities API LAST (generates utility classes)
+@import "bootstrap/scss/utilities/api";

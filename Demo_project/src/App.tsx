@@ -1,66 +1,49 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import DashboardPage from './pages/DashboardPage';
 import ListPage from './pages/ListPage';
+import FormPage from './pages/FormPage';
 
 const pages = [
   { label: 'Dashboard', path: '/' },
-  { label: 'List', path: '/list' },
+  { label: 'Users', path: '/list' },
+  { label: 'Contact', path: '/form' },
 ];
 
-interface AppProps {
-  isDark: boolean;
-  onToggleTheme: () => void;
-}
-
-export default function App({ isDark, onToggleTheme }: AppProps) {
+export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <AppBar position="static">
-        <Container maxWidth="lg">
-          <Toolbar disableGutters>
-            <Typography variant="h6" noWrap sx={{ mr: 4 }}>
-              Demo Project
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: 'flex' }}>
+    <div className="d-flex flex-column min-vh-100">
+      <Navbar bg="primary" data-bs-theme="dark" expand="sm">
+        <Container>
+          <Navbar.Brand href="#" onClick={() => navigate('/')}>
+            Demo Project
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="main-nav" />
+          <Navbar.Collapse id="main-nav">
+            <Nav className="me-auto">
               {pages.map((page) => (
-                <Button
+                <Nav.Link
                   key={page.path}
+                  active={location.pathname === page.path}
                   onClick={() => navigate(page.path)}
-                  sx={{
-                    my: 2,
-                    color: 'white',
-                    display: 'block',
-                    opacity: location.pathname === page.path ? 1 : 0.7,
-                  }}
                 >
                   {page.label}
-                </Button>
+                </Nav.Link>
               ))}
-            </Box>
-            <IconButton color="inherit" onClick={onToggleTheme}>
-              {isDark ? <LightModeIcon /> : <DarkModeIcon />}
-            </IconButton>
-          </Toolbar>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
-      </AppBar>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1 }}>
+      </Navbar>
+      <Container className="mt-4 mb-4 flex-grow-1">
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/list" element={<ListPage />} />
+          <Route path="/form" element={<FormPage />} />
         </Routes>
       </Container>
-    </Box>
+    </div>
   );
 }

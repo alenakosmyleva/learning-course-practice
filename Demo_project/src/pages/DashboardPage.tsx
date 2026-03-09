@@ -1,7 +1,4 @@
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import { Card, Row, Col } from 'react-bootstrap';
 
 const stats = [
   { title: 'Revenue', value: '$24,500', subtitle: '+12% from last month' },
@@ -13,28 +10,24 @@ const stats = [
 export default function DashboardPage() {
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Dashboard
-      </Typography>
-      <Grid container spacing={3}>
+      <h4 className="mb-3">Dashboard</h4>
+      <Row className="g-3">
         {stats.map((stat) => (
-          <Grid key={stat.title} size={{ xs: 12, sm: 6, md: 3 }}>
+          <Col key={stat.title} xs={12} sm={6} md={3}>
             <Card>
-              <CardContent>
-                <Typography color="text.secondary" gutterBottom>
+              <Card.Body>
+                <Card.Text className="text-body-secondary mb-1">
                   {stat.title}
-                </Typography>
-                <Typography variant="h4" component="div">
-                  {stat.value}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+                </Card.Text>
+                <h4>{stat.value}</h4>
+                <Card.Text className="text-body-secondary small">
                   {stat.subtitle}
-                </Typography>
-              </CardContent>
+                </Card.Text>
+              </Card.Body>
             </Card>
-          </Grid>
+          </Col>
         ))}
-      </Grid>
+      </Row>
     </>
   );
 }
