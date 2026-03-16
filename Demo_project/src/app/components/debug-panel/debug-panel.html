@@ -1,0 +1,73 @@
+@if (isOpen) {
+  <div class="debug-backdrop" (click)="close()"></div>
+}
+<div class="debug-panel" [class.open]="isOpen">
+  <div class="debug-header d-flex justify-content-between align-items-center p-3 border-bottom">
+    <h6 class="mb-0 fw-bold">Debug Panel</h6>
+    <button class="btn-close" (click)="close()"></button>
+  </div>
+
+  <ul class="nav nav-tabs px-3 pt-2">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'state'" (click)="switchTab('state')">
+        State
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'edit'" (click)="switchTab('edit')">
+        Edit
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'log'" (click)="switchTab('log')">
+        Log
+      </button>
+    </li>
+  </ul>
+
+  <div class="debug-body p-3">
+    @if (activeTab === 'state') {
+      <pre class="debug-json bg-light p-3 rounded border">{{ state$ | async | json }}</pre>
+    }
+
+    @if (activeTab === 'edit') {
+      @if (editError) {
+        <div class="alert alert-danger py-2 small">{{ editError }}</div>
+      }
+      <textarea
+        class="form-control font-monospace small mb-2"
+        rows="20"
+        [(ngModel)]="editJson"
+      ></textarea>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary btn-sm" (click)="applyJson()">Apply</button>
+        <button class="btn btn-outline-secondary btn-sm" (click)="resetState()">Reset</button>
+      </div>
+    }
+
+    @if (activeTab === 'log') {
+      @if ((actionLog$ | async); as log) {
+        @if (log.length === 0) {
+          <p class="text-body-secondary small">No actions yet</p>
+        } @else {
+          <div class="d-flex justify-content-end mb-2">
+            <button class="btn btn-outline-secondary btn-sm" (click)="clearLog()">Clear</button>
+          </div>
+          @for (entry of log; track entry.timestamp) {
+            <div class="card mb-2">
+              <div class="card-body py-2 px-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge bg-primary">{{ entry.actionName }}</span>
+                  <small class="text-body-secondary">{{ formatTime(entry.timestamp) }}</small>
+                </div>
+                @if (entry.payload) {
+                  <pre class="mt-2 mb-0 small bg-light p-2 rounded">{{ formatPayload(entry.payload) }}</pre>
+                }
+              </div>
+            </div>
+          }
+        }
+      }
+    }
+  </div>
+</div>

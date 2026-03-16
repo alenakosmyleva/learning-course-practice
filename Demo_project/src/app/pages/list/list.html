@@ -1,36 +1,86 @@
 <div class="container py-4">
   <h2 class="mb-4">Users</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (user of users; track user.name) {
+  @if (users$ | async; as users) {
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
           <tr>
-            <td>{{ user.name }}</td>
-            <td>{{ user.role }}</td>
-            <td>
-              <span
-                class="badge"
-                [class.bg-success]="user.status === 'Active'"
-                [class.bg-secondary]="user.status === 'Inactive'"
-              >
-                {{ user.status }}
-              </span>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-primary me-1">Edit</button>
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </td>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
           </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          @for (user of users; track user.id) {
+            <tr>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <span
+                  class="badge"
+                  [class.bg-success]="user.status === 'Active'"
+                  [class.bg-secondary]="user.status === 'Inactive'"
+                  style="cursor: pointer"
+                  (click)="toggleStatus(user.id)"
+                  title="Click to toggle"
+                >
+                  {{ user.status }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-primary me-1" (click)="startEdit(user)">Edit</button>
+                <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>
+
+@if (editingUser) {
+  <div class="modal d-block" tabindex="-1" style="background: rgba(0,0,0,0.5)">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit User</h5>
+          <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input class="form-control" [(ngModel)]="editForm.name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input class="form-control" [(ngModel)]="editForm.email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select class="form-select" [(ngModel)]="editForm.role">
+              <option value="Admin">Admin</option>
+              <option value="Editor">Editor</option>
+              <option value="Viewer">Viewer</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Company</label>
+            <input class="form-control" [(ngModel)]="editForm.company">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input class="form-control" [(ngModel)]="editForm.phone">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+          <button class="btn btn-primary" (click)="saveEdit()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -31,7 +31,8 @@
             ],
             "styles": [
               "src/styles.scss"
-            ]
+            ],
+            "baseHref": "/learning-course-practice/"
           },
           "configurations": {
             "production": {

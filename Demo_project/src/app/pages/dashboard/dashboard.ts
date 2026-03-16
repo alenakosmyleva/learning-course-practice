@@ -1,8 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { AppStoreService } from '../../store/app-store.service';
+import { map, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
+  imports: [AsyncPipe],
   templateUrl: './dashboard.html',
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  private store = inject(AppStoreService);
+
+  stats$ = combineLatest([this.store.users$, this.store.dashboard$]).pipe(
+    map(([users, dashboard]) => [
+      {
+        label: 'Revenue',
+        value: '$' + dashboard.revenue.toLocaleString(),
+        subtitle: '+' + dashboard.revenueChange + '% from last month',
+      },
+      {
+        label: 'Users',
+        value: users.length.toString(),
+        subtitle: users.filter((u) => u.status === 'Active').length + ' active',
+      },
+      {
+        label: 'Orders',
+        value: dashboard.ordersCount.toString(),
+        subtitle: '+' + dashboard.ordersChange + '% from last month',
+      },
+      {
+        label: 'Conversion',
+        value: dashboard.conversionRate + '%',
+        subtitle: '+' + dashboard.conversionChange + '% from last month',
+      },
+    ]),
+  );
+}

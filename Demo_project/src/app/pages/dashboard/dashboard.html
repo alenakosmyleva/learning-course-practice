@@ -1,37 +1,18 @@
 <div class="container py-4">
   <h2 class="mb-4">Dashboard</h2>
-  <div class="row g-4">
-    <div class="col-md-6 col-lg-3">
-      <div class="card">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-body-secondary">Revenue</h6>
-          <h3 class="card-title mb-0">$24,500</h3>
+  @if (stats$ | async; as stats) {
+    <div class="row g-4">
+      @for (stat of stats; track stat.label) {
+        <div class="col-md-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">{{ stat.label }}</h6>
+              <h3 class="card-title mb-1">{{ stat.value }}</h3>
+              <small class="text-body-secondary">{{ stat.subtitle }}</small>
+            </div>
+          </div>
         </div>
-      </div>
+      }
     </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="card">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-body-secondary">Users</h6>
-          <h3 class="card-title mb-0">1,240</h3>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="card">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-body-secondary">Orders</h6>
-          <h3 class="card-title mb-0">320</h3>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-      <div class="card">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-body-secondary">Conversion</h6>
-          <h3 class="card-title mb-0">3.2%</h3>
-        </div>
-      </div>
-    </div>
-  </div>
+  }
 </div>
