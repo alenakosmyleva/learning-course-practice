@@ -7,7 +7,11 @@ export default defineConfig({
     baseURL: 'http://localhost:4200',
     headless: false,
     trace: 'on',
-    video: 'on',
+    video: {
+      mode: 'on',
+      size: { width: 1920, height: 1080 },
+    },
+    viewport: { width: 1920, height: 1080 },
     launchOptions: {
       slowMo: 500,
     },

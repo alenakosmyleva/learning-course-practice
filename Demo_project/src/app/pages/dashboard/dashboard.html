@@ -6,9 +6,16 @@
         <div class="col-md-6 col-lg-3">
           <div class="card">
             <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-body-secondary">{{ stat.label }}</h6>
-              <h3 class="card-title mb-1">{{ stat.value }}</h3>
-              <small class="text-body-secondary">{{ stat.subtitle }}</small>
+              <h6 class="card-subtitle mb-3" style="font-size: 14px; font-weight: 700">{{ stat.label }}</h6>
+              <h3 class="card-title mb-0" style="line-height: 1">{{ stat.value }}</h3>
+              <small style="display: block; margin-top: 4px">
+                @if (stat.change !== null) {
+                  <span [style.color]="stat.change >= 0 ? '#198754' : '#dc3545'">{{ stat.change >= 0 ? '+' : '' }}{{ stat.change }}%</span>
+                  <span class="text-body-secondary"> {{ stat.subtitle }}</span>
+                } @else {
+                  <span class="text-body-secondary">{{ stat.subtitle }}</span>
+                }
+              </small>
             </div>
           </div>
         </div>

@@ -1,0 +1,75 @@
+:host .card {
+  overflow: hidden;
+
+  table {
+    margin: 0 7px;
+    width: calc(100% - 14px);
+  }
+}
+
+:host table {
+  table-layout: fixed;
+
+  th,
+  td {
+    height: 48px;
+    vertical-align: middle;
+    font-size: 14px;
+  }
+}
+
+:host .table-header {
+  margin: 0 8px;
+  width: calc(100% - 16px);
+
+  th {
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+}
+
+:host .card table {
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+:host .btn-icon {
+  width: 31px;
+  height: 31px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #6c757d;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #dee2e6;
+  }
+
+  &.btn-icon-danger {
+    color: #dc3545;
+  }
+}
+
+:host .btn-cancel {
+  background: transparent;
+  border: 1px solid #dee2e6;
+  color: #333333;
+
+  &:hover {
+    background: transparent;
+    border-color: #dee2e6;
+    color: #333333;
+  }
+}
+
+:host .col-actions {
+  width: 82px;
+  text-align: right;
+  padding-right: 8px !important;
+}

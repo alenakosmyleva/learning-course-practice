@@ -17,22 +17,26 @@ export class DashboardComponent {
       {
         label: 'Revenue',
         value: '$' + dashboard.revenue.toLocaleString(),
-        subtitle: '+' + dashboard.revenueChange + '% from last month',
+        change: dashboard.revenueChange,
+        subtitle: 'from last month',
       },
       {
         label: 'Users',
         value: users.length.toString(),
+        change: null,
         subtitle: users.filter((u) => u.status === 'Active').length + ' active',
       },
       {
         label: 'Orders',
         value: dashboard.ordersCount.toString(),
-        subtitle: '+' + dashboard.ordersChange + '% from last month',
+        change: dashboard.ordersChange,
+        subtitle: 'from last month',
       },
       {
         label: 'Conversion',
         value: dashboard.conversionRate + '%',
-        subtitle: '+' + dashboard.conversionChange + '% from last month',
+        change: dashboard.conversionChange,
+        subtitle: 'from last month',
       },
     ]),
   );

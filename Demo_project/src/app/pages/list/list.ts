@@ -3,17 +3,20 @@ import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppStoreService } from '../../store/app-store.service';
 import { User } from '../../store/app-state.model';
+import { RoleIconComponent } from '../../components/role-icon/role-icon';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [AsyncPipe, FormsModule],
+  imports: [AsyncPipe, FormsModule, RoleIconComponent],
   templateUrl: './list.html',
+  styleUrl: './list.scss',
 })
 export class ListComponent {
   private store = inject(AppStoreService);
 
   users$ = this.store.users$;
+  currentRole$ = this.store.currentUserRole$;
 
   editingUser: User | null = null;
   editForm = { name: '', email: '', role: '' as User['role'], company: '', phone: '' };

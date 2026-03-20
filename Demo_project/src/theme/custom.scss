@@ -3,7 +3,7 @@
 
 // 2. Custom variable overrides
 // --- Colors (Bootstrap theme colors) ---
-$primary:   #1976D2;
+$primary:   #333333;
 $secondary: #9C27B0;
 $success:   #2E7D32;
 $info:      #0288D1;
@@ -47,6 +47,8 @@ $btn-font-weight: 500;
 @import "bootstrap/scss/navbar";
 @import "bootstrap/scss/transitions";
 @import "bootstrap/scss/close";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/modal";
 
 // 6. Utilities API LAST (generates utility classes)
 @import "bootstrap/scss/utilities/api";

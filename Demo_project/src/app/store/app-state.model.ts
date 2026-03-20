@@ -18,10 +18,19 @@ export interface DashboardStats {
   conversionChange: number;
 }
 
+export interface OnboardingWizard {
+  step: number;
+  name: string;
+  email: string;
+  role: User['role'] | '';
+}
+
 export interface AppState {
   users: User[];
   dashboard: DashboardStats;
   nextUserId: number;
+  currentUserId: number | null;
+  onboarding: OnboardingWizard;
 }
 
 export interface ActionLogEntry {

@@ -59,7 +59,14 @@ export const INITIAL_STATE: AppState = {
     ordersCount: 320,
     ordersChange: 5,
     conversionRate: 3.2,
-    conversionChange: 0.4,
+    conversionChange: -0.4,
   },
   nextUserId: 6,
+  currentUserId: 1,
+  onboarding: {
+    step: 1,
+    name: '',
+    email: '',
+    role: '',
+  },
 };

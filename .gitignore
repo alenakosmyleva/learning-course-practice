@@ -21,6 +21,9 @@ Demo_project/dist/
 *.log
 npm-debug.log*
 
+# Playwright
+test-results/
+
 # Env
 .env
 .env.local

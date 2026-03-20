@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppState, User, DashboardStats, ActionLogEntry } from './app-state.model';
+import { AppState, User, DashboardStats, ActionLogEntry, OnboardingWizard } from './app-state.model';
 import { INITIAL_STATE } from './initial-state';
 
 @Injectable({ providedIn: 'root' })
@@ -14,6 +14,14 @@ export class AppStoreService {
 
   users$ = this.state$.pipe(map((s) => s.users));
   dashboard$ = this.state$.pipe(map((s) => s.dashboard));
+  currentUserId$ = this.state$.pipe(map((s) => s.currentUserId));
+  currentUserRole$ = this.state$.pipe(
+    map((s) => {
+      if (s.currentUserId === null) return null;
+      const user = s.users.find((u) => u.id === s.currentUserId);
+      return user?.role ?? null;
+    }),
+  );
 
   get snapshot(): AppState {
     return this.stateSubject.getValue();
@@ -72,6 +80,34 @@ export class AppStoreService {
       },
       'TOGGLE_STATUS',
       { id },
+    );
+  }
+
+  onboarding$ = this.state$.pipe(map((s) => s.onboarding));
+
+  updateOnboarding(changes: Partial<OnboardingWizard>) {
+    const state = this.snapshot;
+    this.updateState(
+      { ...state, onboarding: { ...state.onboarding, ...changes } },
+      'UPDATE_ONBOARDING',
+      changes,
+    );
+  }
+
+  resetOnboarding() {
+    const state = this.snapshot;
+    this.updateState(
+      { ...state, onboarding: { step: 1, name: '', email: '', role: '' } },
+      'RESET_ONBOARDING',
+    );
+  }
+
+  setCurrentUser(userId: number | null) {
+    const state = this.snapshot;
+    this.updateState(
+      { ...state, currentUserId: userId },
+      'SET_CURRENT_USER',
+      { userId },
     );
   }
 

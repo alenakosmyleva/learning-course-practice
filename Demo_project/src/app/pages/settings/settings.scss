@@ -1,0 +1,39 @@
+:host .card {
+  overflow: hidden;
+
+  table {
+    margin: 0 7px;
+    width: calc(100% - 14px);
+  }
+}
+
+:host table {
+  table-layout: fixed;
+
+  th,
+  td {
+    height: 48px;
+    vertical-align: middle;
+    font-size: 14px;
+  }
+}
+
+:host .table-header {
+  margin: 0 8px;
+  width: calc(100% - 16px);
+
+  th {
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+}
+
+:host .card table {
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody select {
+    width: 50%;
+  }
+}

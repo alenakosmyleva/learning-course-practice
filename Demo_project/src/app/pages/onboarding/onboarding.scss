@@ -1,0 +1,24 @@
+:host .progress {
+  height: 8px;
+}
+
+:host .form-control,
+:host .form-select {
+  width: 300px;
+}
+
+:host .step-content {
+  min-height: 246px;
+}
+
+:host .btn-cancel {
+  background: transparent;
+  border: 1px solid #dee2e6;
+  color: #333333;
+
+  &:hover {
+    background: transparent;
+    border-color: #dee2e6;
+    color: #333333;
+  }
+}

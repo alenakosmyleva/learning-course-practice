@@ -1,0 +1,45 @@
+<div class="container py-4">
+  <h2 class="mb-4">Settings</h2>
+  @if (users$ | async; as users) {
+    <table class="table table-header mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Current Role</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="card">
+      <table class="table mb-0">
+        <tbody>
+          @for (user of users; track user.id) {
+            <tr
+              (mouseenter)="hoveredUserId = user.id"
+              (mouseleave)="hoveredUserId = null"
+            >
+              <td class="align-middle">{{ user.name }}</td>
+              <td class="align-middle">{{ user.email }}</td>
+              <td class="align-middle">
+                @if (hoveredUserId === user.id) {
+                  <select
+                    class="form-select form-select-sm"
+                    [value]="user.role"
+                    (change)="onRoleChange(user.id, $event)"
+                    [attr.aria-label]="'Role for ' + user.name"
+                  >
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Viewer">Viewer</option>
+                  </select>
+                } @else {
+                  <span class="ps-1"><app-role-icon [role]="user.role" />{{ user.role }}</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

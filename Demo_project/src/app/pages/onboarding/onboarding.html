@@ -1,0 +1,127 @@
+<div class="container py-4">
+  <h2 class="mb-4">Add User</h2>
+
+  <!-- Progress bar -->
+  <div class="mb-4" style="width: 300px">
+    <div class="d-flex justify-content-between mb-1">
+      <small class="text-body-secondary">Step {{ step }} of 3</small>
+      <small class="text-body-secondary">{{ progressPercent }}%</small>
+    </div>
+    <div class="progress">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        [style.width.%]="progressPercent"
+        [attr.aria-valuenow]="progressPercent"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      ></div>
+    </div>
+  </div>
+
+  <div class="step-content">
+  <!-- Step 1: Name & Email -->
+  @if (step === 1) {
+    <h5 class="mb-3">Personal Information</h5>
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input
+        class="form-control"
+        [class.is-invalid]="showErrors && name.trim() === ''"
+        [(ngModel)]="name"
+        placeholder="Enter full name"
+      >
+      @if (showErrors && name.trim() === '') {
+        <div class="invalid-feedback">Please enter a name</div>
+      }
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input
+        class="form-control"
+        [class.is-invalid]="showErrors && !isEmailValid"
+        type="email"
+        [(ngModel)]="email"
+        placeholder="Enter email address"
+      >
+      @if (showErrors && email.trim() === '') {
+        <div class="invalid-feedback">Please enter an email</div>
+      } @else if (showErrors && !isEmailValid) {
+        <div class="invalid-feedback">Please enter a valid email (e.g. user&#64;example.com)</div>
+      }
+    </div>
+  }
+
+  <!-- Step 2: Role -->
+  @if (step === 2) {
+    <h5 class="mb-3">Select Role</h5>
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      <select
+        class="form-select"
+        [class.is-invalid]="showErrors && role === ''"
+        [(ngModel)]="role"
+      >
+        <option value="" disabled>Choose a role...</option>
+        <option value="Admin">Admin</option>
+        <option value="Editor">Editor</option>
+        <option value="Viewer">Viewer</option>
+      </select>
+      @if (showErrors && role === '') {
+        <div class="invalid-feedback">Please select a role</div>
+      }
+    </div>
+  }
+
+  <!-- Step 3: Preview -->
+  @if (step === 3) {
+    <h5 class="mb-3">Review & Create</h5>
+    @if (onboarding$ | async; as ob) {
+      <table class="table mb-0" style="width: 300px">
+        <tbody>
+          <tr>
+            <th class="text-body-secondary" style="width: 80px">Name</th>
+            <td>{{ ob.name }}</td>
+          </tr>
+          <tr>
+            <th class="text-body-secondary">Email</th>
+            <td>{{ ob.email }}</td>
+          </tr>
+          <tr>
+            <th class="text-body-secondary">Role</th>
+            <td>{{ ob.role }}</td>
+          </tr>
+        </tbody>
+      </table>
+    }
+  }
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="d-flex gap-2 mt-4">
+    @if (step > 1) {
+      <button
+        class="btn btn-cancel"
+        (click)="back()"
+      >
+        Back
+      </button>
+    }
+
+    @if (step < 3) {
+      <button
+        class="btn btn-primary"
+        (click)="next()"
+      >
+        Next
+      </button>
+    } @else {
+      <button
+        class="btn btn-success"
+        (click)="create()"
+      >
+        Create User
+      </button>
+    }
+  </div>
+</div>
